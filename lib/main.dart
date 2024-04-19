@@ -1,4 +1,5 @@
 import 'package:aldlal/helper/bining.dart';
+import 'package:aldlal/view/home/home_view.dart';
 import 'package:aldlal/view/splashScreen/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,6 +33,12 @@ class MyApp extends StatelessWidget {
           locale: const Locale('ar'),
           builder: EasyLoading.init(),
           home: const SplashView(),
+          getPages: [
+            GetPage(
+              name: '/home',
+              page: () => HomeView(),
+            )
+          ],
         );
       }),
     );

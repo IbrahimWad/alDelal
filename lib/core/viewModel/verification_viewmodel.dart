@@ -107,7 +107,7 @@ class VerificationViewModel extends GetxController {
         }
         if (responseBody['status'] == true) {
           box.write(StoragConstant.token, token);
-          Get.offAll(const HomeView());
+          Get.offAll(HomeView());
         }
       }
     } catch (e) {

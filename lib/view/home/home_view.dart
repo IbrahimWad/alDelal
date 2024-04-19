@@ -1,4 +1,5 @@
 import 'package:aldlal/core/viewModel/home_viewmodel.dart';
+import 'package:aldlal/model/house_model.dart';
 import 'package:aldlal/view/widget/color_constant.dart';
 import 'package:aldlal/view/widget/custom_text.dart';
 import 'package:aldlal/view/widget/grid_view_container.dart';
@@ -31,6 +32,11 @@ class HomeView extends StatelessWidget {
                           : ColorConstant.textColor,
                       onTap: () {
                         controller.focusType(1);
+                        if (controller.scrollController.hasClients) {
+                          controller.setScrollPosition(
+                              controller.scrollController.offset);
+                        }
+                        controller.getHouses(1);
                       },
                     ),
                     TypeMethod(
@@ -40,6 +46,11 @@ class HomeView extends StatelessWidget {
                           : ColorConstant.textColor,
                       onTap: () {
                         controller.focusType(2);
+                        if (controller.scrollController.hasClients) {
+                          controller.setScrollPosition(
+                              controller.scrollController.offset);
+                        }
+                        controller.getHouses(2);
                       },
                     ),
                     TypeMethod(
@@ -49,6 +60,11 @@ class HomeView extends StatelessWidget {
                           : ColorConstant.textColor,
                       onTap: () {
                         controller.focusType(3);
+                        if (controller.scrollController.hasClients) {
+                          controller.setScrollPosition(
+                              controller.scrollController.offset);
+                        }
+                        controller.getHouses(3);
                       },
                     ),
                   ],
@@ -69,26 +85,75 @@ class HomeView extends StatelessWidget {
                 child: Container(
                   margin: EdgeInsets.only(top: 5),
                   padding: EdgeInsets.symmetric(horizontal: 18),
-                  // color: ColorConstant.textColor,
                   child: Container(
-                    /// here where should my list show up
-                    ///
-                    //color: Colors.white,
-                    child: GridView.builder(
+                      child: GetBuilder<HomeViewModel>(builder: (controller) {
+                    if (controller.houseLists[controller.currentFocusType] ==
+                        null) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+
+                    if (controller
+                        .houseLists[controller.currentFocusType]!.isEmpty) {
+                      return Center(
+                        child: Text('No data available'),
+                      );
+                    }
+
+                    return NotificationListener<ScrollNotification>(
+                      onNotification: (ScrollNotification scrollInfo) {
+                        if (!controller.isDataLoading &&
+                            !controller.isDataFinished &&
+                            !controller.isAllDataLoaded &&
+                            scrollInfo.metrics.pixels ==
+                                scrollInfo.metrics.maxScrollExtent) {
+                          // Load more data when the user reaches the end of the list
+                          controller.getHouses(
+                            controller.currentFocusType,
+                            loadMore: true,
+                            scrollPosition:
+                                controller.scrollController.position.pixels,
+                          );
+                        }
+
+                        return true;
+                      },
+                      child: GridView.builder(
                         gridDelegate:
                             const SliverGridDelegateWithMaxCrossAxisExtent(
-                                maxCrossAxisExtent: 200,
-                                childAspectRatio: 1,
-                                crossAxisSpacing: 20,
-                                mainAxisSpacing: 20),
-                        itemCount: 2,
+                          maxCrossAxisExtent: 200,
+                          childAspectRatio: 1,
+                          crossAxisSpacing: 20,
+                          mainAxisSpacing: 20,
+                        ),
+                        controller: controller.scrollController,
+                        itemCount: controller
+                                .houseLists[controller.currentFocusType]
+                                ?.length ??
+                            0,
                         itemBuilder: (BuildContext ctx, index) {
-                          return GridViewContainer(
-                              type: 'hhh',
+                          List<Datum>? dataList = controller
+                              .houseLists[controller.currentFocusType];
+
+                          return GestureDetector(
+                            onTap: () {
+                              print(dataList?[index].createdAt);
+                            },
+                            child: GridViewContainer(
+                              type: controller.currentFocusType == 1
+                                  ? 'بيع'
+                                  : (controller.currentFocusType == 2
+                                      ? 'استأجار'
+                                      : 'استثمار'),
                               image: 'assets/images/ad_delal.png',
-                              price: 500);
-                        }),
-                  ),
+                              price: 500,
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  })),
                 ),
               )
             ],
