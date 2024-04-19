@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:aldlal/view/widget/storag_constant.dart';
+import 'package:aldlal/view/widget/urls.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -18,13 +18,15 @@ class HomeViewModel extends GetxController {
 
   getHouses() async {
     try {
-      var response = await http.get(Uri.parse(''), headers: {
+      var response = await http
+          .get(Uri.parse('${Urls.houses}$currentFocusType'), headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${StoragConstant.token}',
       });
 
       var responseBody = jsonDecode(response.body);
+
+      print(responseBody);
 
       if (responseBody['status'] == false) {
         Get.snackbar('خطـــأ', 'الخطأ: ${responseBody['error']}',
@@ -50,5 +52,12 @@ class HomeViewModel extends GetxController {
 
       print(e);
     }
+  }
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    getHouses();
+    super.onInit();
   }
 }
