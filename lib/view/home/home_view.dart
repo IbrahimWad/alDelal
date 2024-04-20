@@ -26,7 +26,7 @@ class HomeView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     TypeMethod(
-                      name: 'بيع',
+                      name: 'شراء',
                       color: controller.currentFocusType == 1
                           ? ColorConstant.secondTextColor
                           : ColorConstant.textColor,
@@ -36,7 +36,7 @@ class HomeView extends StatelessWidget {
                           controller.setScrollPosition(
                               controller.scrollController.offset);
                         }
-                        controller.getHouses(1);
+                        // controller.getHouses(1);
                       },
                     ),
                     TypeMethod(
@@ -50,7 +50,7 @@ class HomeView extends StatelessWidget {
                           controller.setScrollPosition(
                               controller.scrollController.offset);
                         }
-                        controller.getHouses(2);
+                        //   controller.getHouses(2);
                       },
                     ),
                     TypeMethod(
@@ -64,7 +64,7 @@ class HomeView extends StatelessWidget {
                           controller.setScrollPosition(
                               controller.scrollController.offset);
                         }
-                        controller.getHouses(3);
+                        // controller.getHouses(3);
                       },
                     ),
                   ],
@@ -112,8 +112,8 @@ class HomeView extends StatelessWidget {
                           controller.getHouses(
                             controller.currentFocusType,
                             loadMore: true,
-                            scrollPosition:
-                                controller.scrollController.position.pixels,
+                            // scrollPosition:
+                            //     controller.scrollController.position.pixels,
                           );
                         }
 
@@ -136,19 +136,19 @@ class HomeView extends StatelessWidget {
                           List<Datum>? dataList = controller
                               .houseLists[controller.currentFocusType];
 
+                          var price = dataList?[index].price ?? 1.0;
+                          var formattedPrice = replaceFarsiNumber(price);
+
                           return GestureDetector(
-                            onTap: () {
-                              print(dataList?[index].createdAt);
-                            },
+                            onTap: () {},
                             child: GridViewContainer(
-                              type: controller.currentFocusType == 1
-                                  ? 'بيع'
-                                  : (controller.currentFocusType == 2
-                                      ? 'استأجار'
-                                      : 'استثمار'),
-                              image: 'assets/images/ad_delal.png',
-                              price: 500,
-                            ),
+                                type: controller.currentFocusType == 1
+                                    ? 'شراء'
+                                    : (controller.currentFocusType == 2
+                                        ? 'استأجار'
+                                        : 'استثمار'),
+                                image: 'assets/images/ad_delal.png',
+                                price: formattedPrice),
                           );
                         },
                       ),
@@ -190,4 +190,16 @@ class HomeView extends StatelessWidget {
       ),
     );
   }
+}
+
+replaceFarsiNumber(input) {
+  const english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+  const farsi = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+
+  String inputString = input.toString();
+  for (int i = 0; i < english.length; i++) {
+    inputString = inputString.replaceAll(english[i], farsi[i]);
+  }
+
+  return inputString;
 }

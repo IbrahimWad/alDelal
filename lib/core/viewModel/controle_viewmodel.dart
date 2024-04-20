@@ -1,4 +1,5 @@
 import 'package:aldlal/view/home/home_view.dart';
+import 'package:aldlal/view/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,30 +14,21 @@ class ControlViewModel extends GetxController {
     _navigatorValue = selectedValue;
     switch (selectedValue) {
       case 0:
-        {
-          currentScreen = HomeView();
-          break;
-        }
+        currentScreen = HomeView();
+
+        break;
       case 1:
-        {
-          print('Go to search view');
-          break;
-        }
+        // currentScreen = // Set your search view widget here
+        break;
       case 2:
-        {
-          print('Add house view');
-          break;
-        }
+        // currentScreen = // Set your add house view widget here
+        break;
       case 3:
-        {
-          print('favorit house view');
-          break;
-        }
+        // currentScreen = // Set your favorite house view widget here
+        break;
       case 4:
-        {
-          print('profile view');
-          break;
-        }
+        currentScreen = ProfileView();
+        break;
     }
     update();
   }

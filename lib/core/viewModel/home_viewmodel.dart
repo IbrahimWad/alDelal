@@ -15,16 +15,51 @@ class HomeViewModel extends GetxController {
   bool isDataFinished = false;
   bool isAllDataLoaded = false;
 
-  void focusType(int value) {
-    _currentFocusType.value = value;
-
-    update();
-  }
-
   Map<int, List<Datum>> houseLists = {};
   Map<int, int> currentPageMap = {};
+  void focusType(int value) {
+    // Save the current scroll position for the current type
+    if (houseLists[_currentFocusType.value] != null &&
+        houseLists[_currentFocusType.value]!.isNotEmpty &&
+        scrollController.hasClients) {
+      currentPageMap[_currentFocusType.value] =
+          scrollController.position.pixels.toInt();
+    }
 
-  getHouses(int type, {bool loadMore = false, double? scrollPosition}) async {
+    // Set the new type
+    _currentFocusType.value = value;
+    isDataFinished = false; // Reset isDataFinished flag
+
+    // Restore the scroll position for the new type if it exists
+    if (currentPageMap[value] != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (scrollController.hasClients) {
+          scrollController.jumpTo(currentPageMap[value]!.toDouble());
+        }
+      });
+    }
+
+    // Check if the data for the selected type is already loaded
+    if (houseLists[value] != null && houseLists[value]!.isNotEmpty) {
+      // Data is already loaded, update the UI
+      update();
+    } else {
+      // Data is not loaded, fetch it from the API
+      getHouses(value).then((_) {
+        // Update the UI after the data is fetched
+        update();
+      });
+    }
+  }
+
+  getHouses(int type, {bool loadMore = false}) async {
+    // Check if the data for the selected type is already loaded
+    if (houseLists[type] != null && houseLists[type]!.isNotEmpty && !loadMore) {
+      // Data is already loaded, update the UI
+      update();
+      return;
+    }
+
     int currentPage = loadMore ? currentPageMap[type]! + 1 : 1;
 
     try {
@@ -38,15 +73,7 @@ class HomeViewModel extends GetxController {
 
       final houseModel = houseModelFromJson(response.body);
 
-      if (houseModel.status == false) {
-        Get.snackbar(
-          'خطـــأ',
-          'الخطأ: ${houseModel.message}',
-          colorText: Colors.white,
-          duration: Duration(seconds: 20),
-          snackPosition: SnackPosition.BOTTOM,
-        );
-      }
+      currentPageMap[type] = houseModel.data.currentPage;
 
       if (!loadMore) {
         houseLists[type] = houseModel.data.data;
@@ -54,17 +81,17 @@ class HomeViewModel extends GetxController {
         houseLists[type]!.addAll(houseModel.data.data);
       }
 
-      currentPageMap[type] = houseModel.data.currentPage;
-
       if (scrollPosition != null) {
-        scrollController.jumpTo(scrollPosition);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (scrollController.hasClients) {
+            scrollController.jumpTo(scrollPosition!);
+          }
+        });
       }
 
-      // Check if all data is loaded
       if (houseModel.data.data.isEmpty) {
         isDataFinished = true;
-        isAllDataLoaded =
-            true; // Set isAllDataLoaded to true when all data is loaded
+        isAllDataLoaded = true;
       }
 
       update();

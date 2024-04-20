@@ -12,6 +12,6 @@ class Binding extends Bindings {
     Get.lazyPut(() => SplashScreenViewModel());
     Get.lazyPut(() => VerificationViewModel());
     Get.lazyPut(() => ControlViewModel());
-    Get.lazyPut(() => HomeViewModel());
+    Get.lazyPut(() => HomeViewModel(), fenix: true);
   }
 }
