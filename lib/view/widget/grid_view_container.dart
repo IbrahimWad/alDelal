@@ -1,3 +1,4 @@
+import 'package:aldlal/view/widget/color_constant.dart';
 import 'package:aldlal/view/widget/custom_text.dart';
 import 'package:flutter/material.dart';
 
@@ -16,10 +17,11 @@ class GridViewContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        // color: Colors.white,
-        //  color: Colors.amber,
-      ),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: ColorConstant.textColor)
+          // color: Colors.white,
+          //  color: Colors.amber,
+          ),
       height: 172,
       child: Stack(
         children: [
