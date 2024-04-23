@@ -1,4 +1,6 @@
+import 'package:aldlal/main.dart';
 import 'package:aldlal/model/house_model.dart';
+import 'package:aldlal/view/widget/storag_constant.dart';
 import 'package:aldlal/view/widget/urls.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -52,13 +54,14 @@ class HomeViewModel extends GetxController {
     }
   }
 
+  bool isLoading = false;
+
   getHouses(int type, {bool loadMore = false}) async {
-    // Check if the data for the selected type is already loaded
-    if (houseLists[type] != null && houseLists[type]!.isNotEmpty && !loadMore) {
-      // Data is already loaded, update the UI
-      update();
-      return;
+    if (isLoading) {
+      return; // If data is already loading, do not load again
     }
+
+    isLoading = true; // Set loading state to true
 
     int currentPage = loadMore ? currentPageMap[type]! + 1 : 1;
 
@@ -68,6 +71,7 @@ class HomeViewModel extends GetxController {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${box.read(StoragConstant.token)}',
         },
       );
 
@@ -75,6 +79,7 @@ class HomeViewModel extends GetxController {
 
       currentPageMap[type] = houseModel.data.currentPage;
 
+      print(houseModel.userId);
       if (!loadMore) {
         houseLists[type] = houseModel.data.data;
       } else {
@@ -105,7 +110,23 @@ class HomeViewModel extends GetxController {
       );
 
       print(e);
+    } finally {
+      isLoading = false; // Set loading state to false
     }
+  }
+
+  ScrollController setupScrollController() {
+    final scrollController = ScrollController();
+
+    // Attach a listener to the scrollController to detect when the user reaches the bottom
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        getHouses(_currentFocusType.value, loadMore: true);
+      }
+    });
+
+    return scrollController;
   }
 
   void setScrollPosition(double position) {

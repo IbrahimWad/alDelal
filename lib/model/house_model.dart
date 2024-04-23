@@ -13,23 +13,26 @@ class HouseModel {
   bool status;
   String message;
   Data data;
+  int? userId;
 
-  HouseModel({
-    required this.status,
-    required this.message,
-    required this.data,
-  });
+  HouseModel(
+      {required this.status,
+      required this.message,
+      required this.data,
+      required this.userId});
 
   factory HouseModel.fromJson(Map<String, dynamic> json) => HouseModel(
         status: json["status"],
         message: json["message"],
         data: Data.fromJson(json["data"]),
+        userId: json['user_id'],
       );
 
   Map<String, dynamic> toJson() => {
         "status": status,
         "message": message,
         "data": data.toJson(),
+        'user_id': userId,
       };
 }
 
