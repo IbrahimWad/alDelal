@@ -1,31 +1,47 @@
-import 'package:aldlal/view/widget/color_constant.dart';
-import 'package:aldlal/view/widget/custom_button.dart';
+import 'package:aldlal/core/service/show_diloag_alret.dart';
+import 'package:aldlal/main.dart';
+import 'package:aldlal/view/home/control_view.dart';
+import 'package:aldlal/view/widget/storag_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProfileViewModel extends GetxController {
   logOut() {
-    Get.dialog(
-      Center(
-        child: Container(
-          height: 200,
-          decoration: BoxDecoration(
-              color: ColorConstant.backgroundColor,
-              borderRadius: BorderRadius.all(Radius.circular(10))),
-          margin: EdgeInsets.symmetric(horizontal: 40),
-          padding: EdgeInsets.symmetric(horizontal: 25),
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              CustomButton(
-                onPressed: () {},
-                text: 'تسجيل الخروج',
-              ),
-              // إضافة زر آخر هنا إذا لزم الأمر
-            ],
-          ),
-        ),
-      ),
+    ShowDiloagAlretService().showDiloagAlret(
+      text: 'تسجيل الخروج',
+      onPressed: () {
+        if (box.read(StoragConstant.token) == null) {
+          Get.back();
+          Get.snackbar(
+            'خطـــأ',
+            'لم تقم بتسجيل الدخول من الاساس',
+            colorText: Colors.white,
+            duration: Duration(seconds: 10),
+            snackPosition: SnackPosition.BOTTOM,
+          );
+        } else {
+          box.erase();
+          Get.offAll(ControlView());
+        }
+
+        update();
+      },
+      text2: 'رجوع',
+      onPressed2: () {
+        Get.back();
+      },
+      title: 'هل انت متاكد من الخروج',
+      height: 180,
     );
+  }
+
+  delete() {
+    ShowDiloagAlretService().showDiloagAlret(
+        height: 200,
+        onPressed2: () {},
+        onPressed: () {},
+        text2: 'الرجوع',
+        text: 'حذف الحساب',
+        title: 'هل انت متاكد من حذف\n الحساب');
   }
 }

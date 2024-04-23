@@ -1,4 +1,5 @@
 import 'package:aldlal/core/viewModel/profile_viewmodel.dart';
+import 'package:aldlal/view/auth/auth.dart';
 import 'package:aldlal/view/widget/color_constant.dart';
 import 'package:aldlal/view/widget/custom_text.dart';
 import 'package:flutter/material.dart';
@@ -11,41 +12,49 @@ class ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstant.backgroundColor,
-      body: GetBuilder<ProfileViewModel>(builder: (controller) {
-        return ListView(
-          children: [
-            const SizedBox(
-              height: 70,
-            ),
-            GestureDetector(
-                onTap: () {}, child: ListButtons(text: 'تسجيل الدخول')),
-            const SizedBox(
-              height: 27,
-            ),
-            GestureDetector(
-                onTap: () {}, child: ListButtons(text: 'لغة التطبيق')),
-            const SizedBox(
-              height: 27,
-            ),
-            GestureDetector(
-                onTap: () {}, child: ListButtons(text: 'منشورات الحساب')),
-            const SizedBox(
-              height: 27,
-            ),
-            GestureDetector(
-                onTap: () {}, child: ListButtons(text: 'حذف الحساب')),
-            const SizedBox(
-              height: 27,
-            ),
-            GestureDetector(
-                onTap: () {
-                  controller.logOut();
-                },
-                child: ListButtons(
-                    text: 'تسجيل خروج', color: ColorConstant.warning)),
-          ],
-        );
-      }),
+      body: GetBuilder<ProfileViewModel>(
+          init: ProfileViewModel(),
+          builder: (controller) {
+            return ListView(
+              children: [
+                const SizedBox(
+                  height: 70,
+                ),
+                GestureDetector(
+                    onTap: () {
+                      Get.to(Auth());
+                    },
+                    child: ListButtons(text: 'تسجيل الدخول')),
+                const SizedBox(
+                  height: 27,
+                ),
+                GestureDetector(
+                    onTap: () {}, child: ListButtons(text: 'لغة التطبيق')),
+                const SizedBox(
+                  height: 27,
+                ),
+                GestureDetector(
+                    onTap: () {}, child: ListButtons(text: 'منشورات الحساب')),
+                const SizedBox(
+                  height: 27,
+                ),
+                GestureDetector(
+                    onTap: () {
+                      controller.delete();
+                    },
+                    child: ListButtons(text: 'حذف الحساب')),
+                const SizedBox(
+                  height: 27,
+                ),
+                GestureDetector(
+                    onTap: () {
+                      controller.logOut();
+                    },
+                    child: ListButtons(
+                        text: 'تسجيل خروج', color: ColorConstant.warning)),
+              ],
+            );
+          }),
     );
   }
 
