@@ -38,8 +38,12 @@ class ProfileViewModel extends GetxController {
   delete() {
     ShowDiloagAlretService().showDiloagAlret(
         height: 200,
-        onPressed2: () {},
-        onPressed: () {},
+        onPressed2: () {
+          Get.back();
+        },
+        onPressed: () {
+          // make request here
+        },
         text2: 'الرجوع',
         text: 'حذف الحساب',
         title: 'هل انت متاكد من حذف\n الحساب');
