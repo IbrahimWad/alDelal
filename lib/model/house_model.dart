@@ -45,7 +45,7 @@ class Data {
   int lastPage;
   String lastPageUrl;
   List<Link> links;
-  String nextPageUrl;
+  String? nextPageUrl; // Make nextPageUrl nullable
   String path;
   int perPage;
   dynamic prevPageUrl;
@@ -60,27 +60,27 @@ class Data {
     required this.lastPage,
     required this.lastPageUrl,
     required this.links,
-    required this.nextPageUrl,
+    this.nextPageUrl, // Update nextPageUrl to be nullable
     required this.path,
     required this.perPage,
-    required this.prevPageUrl,
+    this.prevPageUrl,
     required this.to,
     required this.total,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        currentPage: json["current_page"],
+        currentPage: json["current_page"] ?? 0,
         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
         firstPageUrl: json["first_page_url"],
-        from: json["from"],
-        lastPage: json["last_page"],
+        from: json["from"] ?? 0,
+        lastPage: json["last_page"] ?? 0,
         lastPageUrl: json["last_page_url"],
         links: List<Link>.from(json["links"].map((x) => Link.fromJson(x))),
-        nextPageUrl: json["next_page_url"],
+        nextPageUrl: json["next_page_url"], // Update nextPageUrl to be nullable
         path: json["path"],
         perPage: json["per_page"],
         prevPageUrl: json["prev_page_url"],
-        to: json["to"],
+        to: json["to"] ?? 0,
         total: json["total"],
       );
 

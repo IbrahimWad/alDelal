@@ -1,5 +1,14 @@
+// ignore_for_file: unnecessary_null_comparison
+
+import 'dart:convert';
+
+import 'package:aldlal/core/service/show_diloag_alret.dart';
 import 'package:aldlal/main.dart';
 import 'package:aldlal/model/house_model.dart';
+import 'package:aldlal/view/auth/auth.dart';
+import 'package:aldlal/view/widget/color_constant.dart';
+import 'package:aldlal/view/widget/custom_button.dart';
+import 'package:aldlal/view/widget/custom_text.dart';
 import 'package:aldlal/view/widget/storag_constant.dart';
 import 'package:aldlal/view/widget/urls.dart';
 import 'package:flutter/material.dart';
@@ -62,10 +71,9 @@ class HomeViewModel extends GetxController {
     }
 
     isLoading = true; // Set loading state to true
-
-    int currentPage = loadMore ? currentPageMap[type]! + 1 : 1;
-
     try {
+      int currentPage = loadMore ? currentPageMap[type]! + 1 : 1;
+
       var response = await http.get(
         Uri.parse('${Urls.houses}$type?page=$currentPage'),
         headers: {
@@ -74,18 +82,21 @@ class HomeViewModel extends GetxController {
           'Authorization': 'Bearer ${box.read(StoragConstant.token)}',
         },
       );
-
       final houseModel = houseModelFromJson(response.body);
-
+      if (houseModel.data.lastPage != null &&
+          houseModel.data.currentPage != null) {
+        if (houseModel.data.currentPage >= houseModel.data.lastPage) {
+          // No more pages available
+          isDataFinished = true;
+          isAllDataLoaded = true;
+        }
+      }
       currentPageMap[type] = houseModel.data.currentPage;
-
-      print(houseModel.userId);
       if (!loadMore) {
         houseLists[type] = houseModel.data.data;
       } else {
         houseLists[type]!.addAll(houseModel.data.data);
       }
-
       if (scrollPosition != null) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (scrollController.hasClients) {
@@ -93,12 +104,6 @@ class HomeViewModel extends GetxController {
           }
         });
       }
-
-      if (houseModel.data.data.isEmpty) {
-        isDataFinished = true;
-        isAllDataLoaded = true;
-      }
-
       update();
     } catch (e) {
       Get.snackbar(
@@ -113,6 +118,92 @@ class HomeViewModel extends GetxController {
     } finally {
       isLoading = false; // Set loading state to false
     }
+  }
+
+  addToFavorit(id) async {
+    try {
+      var response = await http.post(
+        Uri.parse('${Urls.addToFavorit}$id'),
+        body: jsonEncode({}),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${box.read(StoragConstant.token)}',
+        },
+      );
+
+      var responseBody = jsonDecode(response.body);
+
+      print(responseBody);
+
+      if (responseBody['message'] == 'Unauthenticated.') {
+        ShowDiloagAlretService().showDiloagAlret(
+            text: 'تسجيل الدخول',
+            onPressed: () {
+              Get.back();
+              Get.to(Auth(),
+                  transition: Transition.downToUp,
+                  duration: Duration(milliseconds: 500));
+            },
+            text2: 'الرجوع',
+            onPressed2: () {
+              Get.back();
+            },
+            title: 'يرجى القيام بتسجيل الدخول للاستفادة',
+            height: 200);
+      }
+      if (response.statusCode == 404) {
+        if (responseBody['message'] == 'No User!') {
+          noUser(text: 'لــقد قمت بحذف حسابك');
+        }
+        if (responseBody['message'] == 'No item for this ID') {
+          noUser(text: 'هذا المنزل لم يعد متوفراََ');
+        }
+      }
+      if (response.statusCode == 200) {
+        /// complete the coding form here
+        Get.dialog(
+          Container(
+            child: Column(
+              children: [],
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  noUser({required String text}) {
+    Get.dialog(Container(
+      height: 200,
+      width: 200,
+      decoration: BoxDecoration(
+        color: ColorConstant.backgroundColor,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        children: [
+          SizedBox(
+            height: 50,
+          ),
+          CustomText(
+            text: text,
+            color: ColorConstant.warning,
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          CustomButton(
+            onPressed: () {
+              Get.back();
+            },
+            text: 'الرجوع',
+          ),
+        ],
+      ),
+    ));
   }
 
   ScrollController setupScrollController() {

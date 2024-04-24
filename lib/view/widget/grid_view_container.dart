@@ -8,12 +8,14 @@ class GridViewContainer extends StatelessWidget {
   final String type;
   final String price;
   final Color favoritColor;
+  final Function() addToFavorit;
   const GridViewContainer({
     super.key,
     required this.type,
     required this.image,
     required this.price,
     this.favoritColor = ColorConstant.backgroundColor,
+    required this.addToFavorit,
   });
 
   @override
@@ -36,6 +38,7 @@ class GridViewContainer extends StatelessWidget {
               width: double.infinity,
               child: CachedNetworkImage(
                 imageUrl: image,
+                fit: BoxFit.fill,
                 cacheKey: image, // Use the image URL as the cache key
                 placeholder: (context, url) => CircularProgressIndicator(),
                 errorWidget: (context, url, error) => Icon(Icons.error),
@@ -43,13 +46,16 @@ class GridViewContainer extends StatelessWidget {
             ),
           ),
           Positioned(height: 30, right: 10, child: CustomText(text: type)),
-          const Positioned(
+          Positioned(
             height: 40,
             left: 10,
-            child: Image(
-              image: AssetImage('assets/images/favorit.png'),
-              height: 24,
-              width: 24,
+            child: GestureDetector(
+              onTap: addToFavorit,
+              child: Image(
+                image: AssetImage('assets/images/favorit.png'),
+                height: 24,
+                width: 24,
+              ),
             ),
           ),
           Positioned(

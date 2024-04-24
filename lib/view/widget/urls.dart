@@ -4,4 +4,5 @@ class Urls {
   static const String auth = '$mainUrl/auth';
   static const String verfyOtp = '$mainUrl/verification';
   static const String houses = '$mainUrl/houses/';
+  static const String addToFavorit = '$mainUrl/favroit/';
 }
