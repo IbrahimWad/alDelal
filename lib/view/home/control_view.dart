@@ -3,21 +3,21 @@ import 'package:aldlal/view/widget/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ControlView extends GetView<ControlViewModel> {
-  ControlView({Key? key});
-
+class ControlView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Get.put(ControlViewModel());
     return GetBuilder<ControlViewModel>(
+      init:
+          ControlViewModel(), // Use GetBuilder with init to create the controller
       builder: (controller) => Scaffold(
         body: controller.currentScreen,
-        bottomNavigationBar: bottomNavigationBar(context),
+        bottomNavigationBar: bottomNavigationBar(context, controller),
       ),
     );
   }
 
-  Container bottomNavigationBar(BuildContext context) {
+  Container bottomNavigationBar(
+      BuildContext context, ControlViewModel controller) {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -28,8 +28,7 @@ class ControlView extends GetView<ControlViewModel> {
       ),
       child: Theme(
         data: Theme.of(context).copyWith(
-          canvasColor:
-              Colors.transparent, // Set the canvas color to transparent
+          canvasColor: Colors.transparent,
           splashColor: Colors.transparent,
         ),
         child: BottomNavigationBar(
@@ -37,23 +36,25 @@ class ControlView extends GetView<ControlViewModel> {
           showUnselectedLabels: false,
           selectedItemColor: Color(0xffC2E8FF),
           unselectedItemColor: ColorConstant.textColor,
+          currentIndex: controller
+              .navigatorValue, // Use the current index from the controller
           onTap: (val) {
             controller.changeSelectedValue(val);
           },
           items: [
-            _bottomNavigationBarIteam(
+            _bottomNavigationBarItem(
                 image: 'assets/images/icon_home.png',
                 width: 24.16,
                 height: 24.15),
-            _bottomNavigationBarIteam(
+            _bottomNavigationBarItem(
                 image: 'assets/images/search.png', width: 24.27, height: 24.15),
-            _bottomNavigationBarIteam(
+            _bottomNavigationBarItem(
                 image: 'assets/images/add.png', width: 26.73, height: 24.15),
-            _bottomNavigationBarIteam(
+            _bottomNavigationBarItem(
                 image: 'assets/images/favorit.png',
                 width: 26.58,
                 height: 24.15),
-            _bottomNavigationBarIteam(
+            _bottomNavigationBarItem(
                 image: 'assets/images/profile.png', width: 26.73, height: 26.73)
           ],
         ),
@@ -61,12 +62,10 @@ class ControlView extends GetView<ControlViewModel> {
     );
   }
 
-  _bottomNavigationBarIteam(
+  BottomNavigationBarItem _bottomNavigationBarItem(
       {required String image, required double height, required double width}) {
     return BottomNavigationBarItem(
         icon: Container(
-          //  padding: EdgeInsets.only(top: 10),
-          // height: 24.15,
           child: Container(
             height: height,
             width: width,
