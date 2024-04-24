@@ -147,7 +147,12 @@ class HomeView extends StatelessWidget {
                                     : (controller.currentFocusType == 2
                                         ? 'استأجار'
                                         : 'استثمار'),
-                                image: 'assets/images/ad_delal.png',
+                                image:
+                                    'https://i.ytimg.com/vi/nWSwPB4SJ38/maxresdefault.jpg',
+                                favoritColor:
+                                    dataList?[index].isFavorited == true
+                                        ? ColorConstant.textColor
+                                        : ColorConstant.backgroundColor,
                                 price: formattedPrice),
                           );
                         },

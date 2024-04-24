@@ -12,27 +12,28 @@ String houseModelToJson(HouseModel data) => json.encode(data.toJson());
 class HouseModel {
   bool status;
   String message;
-  Data data;
   int? userId;
+  Data data;
 
-  HouseModel(
-      {required this.status,
-      required this.message,
-      required this.data,
-      required this.userId});
+  HouseModel({
+    required this.status,
+    required this.message,
+    required this.userId,
+    required this.data,
+  });
 
   factory HouseModel.fromJson(Map<String, dynamic> json) => HouseModel(
         status: json["status"],
         message: json["message"],
+        userId: json["user_id"] != null ? json["user_id"] as int : null,
         data: Data.fromJson(json["data"]),
-        userId: json['user_id'],
       );
 
   Map<String, dynamic> toJson() => {
         "status": status,
         "message": message,
+        "user_id": userId,
         "data": data.toJson(),
-        'user_id': userId,
       };
 }
 
@@ -40,15 +41,15 @@ class Data {
   int currentPage;
   List<Datum> data;
   String firstPageUrl;
-  int? from; // Make 'from' nullable
+  int from;
   int lastPage;
   String lastPageUrl;
   List<Link> links;
-  String? nextPageUrl; // Make 'nextPageUrl' nullable
+  String nextPageUrl;
   String path;
   int perPage;
-  String? prevPageUrl; // Make 'prevPageUrl' nullable
-  int? to; // Make 'to' nullable
+  dynamic prevPageUrl;
+  int to;
   int total;
 
   Data({
@@ -102,20 +103,21 @@ class Data {
 
 class Datum {
   int id;
-  EstateType neighborhood;
+  String neighborhood;
   int area;
   int width;
   int height;
-  EstateType estateType;
-  EstateStreet estateStreet;
-  EstateDeed estateDeed;
+  String estateType;
+  String estateStreet;
+  String estateDeed;
   dynamic price;
   String images;
   DateTime createdAt;
   DateTime updatedAt;
   int userId;
   int displayType;
-  Note note;
+  String note;
+  bool isFavorited;
 
   Datum({
     required this.id,
@@ -133,60 +135,47 @@ class Datum {
     required this.userId,
     required this.displayType,
     required this.note,
+    required this.isFavorited,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
-        neighborhood: estateTypeValues.map[json["neighborhood"]]!,
+        neighborhood: json["neighborhood"],
         area: json["area"],
         width: json["width"],
         height: json["height"],
-        estateType: estateTypeValues.map[json["estateType"]]!,
-        estateStreet: estateStreetValues.map[json["estateStreet"]]!,
-        estateDeed: estateDeedValues.map[json["estateDeed"]]!,
+        estateType: json["estateType"],
+        estateStreet: json["estateStreet"],
+        estateDeed: json["estateDeed"],
         price: json["price"],
         images: json["images"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         userId: json["user_id"],
         displayType: json["displayType"],
-        note: noteValues.map[json["note"]]!,
+        note: json["note"],
+        isFavorited: json["is_favorited"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "neighborhood": estateTypeValues.reverse[neighborhood],
+        "neighborhood": neighborhood,
         "area": area,
         "width": width,
         "height": height,
-        "estateType": estateTypeValues.reverse[estateType],
-        "estateStreet": estateStreetValues.reverse[estateStreet],
-        "estateDeed": estateDeedValues.reverse[estateDeed],
+        "estateType": estateType,
+        "estateStreet": estateStreet,
+        "estateDeed": estateDeed,
         "price": price,
         "images": images,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
         "user_id": userId,
         "displayType": displayType,
-        "note": noteValues.reverse[note],
+        "note": note,
+        "is_favorited": isFavorited,
       };
 }
-
-enum EstateDeed { EMPTY }
-
-final estateDeedValues = EnumValues({"طابو": EstateDeed.EMPTY});
-
-enum EstateStreet { Y }
-
-final estateStreetValues = EnumValues({"y": EstateStreet.Y});
-
-enum EstateType { SS }
-
-final estateTypeValues = EnumValues({"ss": EstateType.SS});
-
-enum Note { SDSDSDSD }
-
-final noteValues = EnumValues({"sdsdsdsd": Note.SDSDSDSD});
 
 class Link {
   String? url;
@@ -210,16 +199,4 @@ class Link {
         "label": label,
         "active": active,
       };
-}
-
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
 }

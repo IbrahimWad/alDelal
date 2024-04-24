@@ -1,16 +1,19 @@
 import 'package:aldlal/view/widget/color_constant.dart';
 import 'package:aldlal/view/widget/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class GridViewContainer extends StatelessWidget {
   final String image;
   final String type;
   final String price;
+  final Color favoritColor;
   const GridViewContainer({
     super.key,
     required this.type,
     required this.image,
     required this.price,
+    this.favoritColor = ColorConstant.backgroundColor,
   });
 
   @override
@@ -31,10 +34,11 @@ class GridViewContainer extends StatelessWidget {
               color: Colors.black,
               height: double.infinity,
               width: double.infinity,
-              child: Image(
-                image: AssetImage(image),
-                alignment: Alignment.center,
-                fit: BoxFit.contain,
+              child: CachedNetworkImage(
+                imageUrl: image,
+                cacheKey: image, // Use the image URL as the cache key
+                placeholder: (context, url) => CircularProgressIndicator(),
+                errorWidget: (context, url, error) => Icon(Icons.error),
               ),
             ),
           ),
