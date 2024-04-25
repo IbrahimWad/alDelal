@@ -86,6 +86,16 @@ class HomeView extends StatelessWidget {
                     child: GetBuilder<HomeViewModel>(builder: (controller) {
                       if (controller.houseLists[controller.currentFocusType] ==
                           null) {
+                        if (controller.isTimedOut == true) {
+                          return Center(
+                            child: CustomText(
+                              text: 'لا يوجد اتصال بالشبكة',
+                              alignment: Alignment.center,
+                              fontSize: 24,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          );
+                        }
                         return Center(
                           child: CircularProgressIndicator(),
                         );
@@ -94,7 +104,12 @@ class HomeView extends StatelessWidget {
                       if (controller
                           .houseLists[controller.currentFocusType]!.isEmpty) {
                         return Center(
-                          child: Text('No data available'),
+                          child: CustomText(
+                            text: 'لا توجد معلومات متاحة',
+                            alignment: Alignment.center,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w400,
+                          ),
                         );
                       }
 

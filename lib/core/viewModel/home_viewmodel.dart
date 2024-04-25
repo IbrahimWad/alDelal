@@ -1,7 +1,7 @@
 // ignore_for_file: unnecessary_null_comparison
 
+import 'dart:async';
 import 'dart:convert';
-
 import 'package:aldlal/core/service/show_diloag_alret.dart';
 import 'package:aldlal/main.dart';
 import 'package:aldlal/model/house_model.dart';
@@ -65,6 +65,9 @@ class HomeViewModel extends GetxController {
 
   bool isLoading = false;
 
+  RxBool get isTimedOut => _isTimedout;
+
+  late final RxBool _isTimedout = false.obs;
   getHouses(int type, {bool loadMore = false}) async {
     if (isLoading) {
       return; // If data is already loading, do not load again
@@ -81,7 +84,7 @@ class HomeViewModel extends GetxController {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ${box.read(StoragConstant.token)}',
         },
-      );
+      ).timeout(Duration(seconds: 10));
       final houseModel = houseModelFromJson(response.body);
       if (houseModel.data.lastPage != null &&
           houseModel.data.currentPage != null) {
@@ -105,6 +108,48 @@ class HomeViewModel extends GetxController {
         });
       }
       update();
+    } on TimeoutException catch (_) {
+      _isTimedout.value = true;
+
+      Get.dialog(
+        barrierDismissible: false,
+        transitionDuration: Duration(milliseconds: 500),
+        Center(
+          child: Container(
+            height: 150,
+            width: 300,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: ColorConstant.backgroundColor),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 30,
+                ),
+                CustomText(
+                  text: 'خطأ في الاتصال',
+                  alignment: Alignment.center,
+                  fontSize: 20,
+                  color: ColorConstant.warning,
+                  fontWeight: FontWeight.w400,
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                CustomText(
+                  text: 'الرجاء قم بالتحقق من شبكة الانترنت',
+                  alignment: Alignment.center,
+                  fontWeight: FontWeight.w400,
+                  color: ColorConstant.secondTextColor,
+                  fontSize: 18,
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+      update();
+      // Reset isTimedOut to false after showing the dialog
     } catch (e) {
       Get.snackbar(
         'خطـــأ',
