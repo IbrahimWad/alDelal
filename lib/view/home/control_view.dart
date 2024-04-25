@@ -19,7 +19,7 @@ class ControlView extends StatelessWidget {
   Container bottomNavigationBar(
       BuildContext context, ControlViewModel controller) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment(0.00, -1.00),
           end: Alignment(0, 1),
@@ -39,7 +39,11 @@ class ControlView extends StatelessWidget {
           currentIndex: controller
               .navigatorValue, // Use the current index from the controller
           onTap: (val) {
-            controller.changeSelectedValue(val);
+            if (val == 2) {
+              controller.BottomSheetMethod();
+            } else {
+              controller.changeSelectedValue(val);
+            }
           },
           items: [
             _bottomNavigationBarItem(

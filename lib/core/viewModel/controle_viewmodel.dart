@@ -1,5 +1,7 @@
 import 'package:aldlal/view/home/home_view.dart';
 import 'package:aldlal/view/profile/profile.dart';
+import 'package:aldlal/view/widget/color_constant.dart';
+import 'package:aldlal/view/widget/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,6 +23,7 @@ class ControlViewModel extends GetxController {
         // currentScreen = // Set your search view widget here
         break;
       case 2:
+        // BottomSheetMethod();
         // currentScreen = // Set your add house view widget here
         break;
       case 3:
@@ -31,5 +34,70 @@ class ControlViewModel extends GetxController {
         break;
     }
     update();
+  }
+
+  BottomSheetMethod() {
+    Get.bottomSheet(
+      Container(
+        padding: EdgeInsets.symmetric(horizontal: 28),
+        margin: EdgeInsets.symmetric(horizontal: 5),
+        height: Get.height,
+        width: Get.width,
+        decoration: BoxDecoration(
+          color: ColorConstant.backgroundColor,
+          borderRadius: BorderRadius.circular(18),
+        ),
+        child: Column(
+          children: [
+            const SizedBox(height: 11),
+            Container(
+                width: 23,
+                height: 3,
+                decoration: BoxDecoration(
+                  color: ColorConstant.secondTextColor,
+                  borderRadius: BorderRadius.circular(18),
+                )),
+            const SizedBox(height: 41),
+            CustomButton(
+              onPressed: () {},
+              text: 'أضافة منشور مميز',
+              fontSize: 20,
+              fontWeight: FontWeight.w400,
+              buttonColor: ColorConstant.backgroundColor,
+              borderColor: ColorConstant.secondTextColor,
+            ),
+            const SizedBox(height: 16),
+            CustomButton(
+              onPressed: () {},
+              text: 'اضافة عرض بيع',
+              fontSize: 20,
+              fontWeight: FontWeight.w400,
+              buttonColor: ColorConstant.backgroundColor,
+              borderColor: ColorConstant.secondTextColor,
+            ),
+            const SizedBox(height: 16),
+            CustomButton(
+              onPressed: () {},
+              text: 'اضافة عرض ايجار',
+              fontSize: 20,
+              fontWeight: FontWeight.w400,
+              buttonColor: ColorConstant.backgroundColor,
+              borderColor: ColorConstant.secondTextColor,
+            ),
+            const SizedBox(height: 16),
+            CustomButton(
+              onPressed: () {},
+              text: 'اضافة عرض استثمار',
+              fontSize: 20,
+              fontWeight: FontWeight.w400,
+              buttonColor: ColorConstant.backgroundColor,
+              borderColor: ColorConstant.secondTextColor,
+            )
+          ],
+        ),
+      ),
+    ).then((value) {
+      onClose();
+    });
   }
 }
