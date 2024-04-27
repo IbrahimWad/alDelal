@@ -1,5 +1,6 @@
 import 'package:aldlal/core/service/show_diloag_alret.dart';
 import 'package:aldlal/main.dart';
+import 'package:aldlal/view/auth/auth.dart';
 import 'package:aldlal/view/home/control_view.dart';
 import 'package:aldlal/view/widget/storag_constant.dart';
 import 'package:flutter/material.dart';
@@ -47,5 +48,25 @@ class ProfileViewModel extends GetxController {
         text2: 'الرجوع',
         text: 'حذف الحساب',
         title: 'هل انت متاكد من حذف\n الحساب');
+  }
+
+  moveToMyPosts() {
+    try {
+      if (box.read(StoragConstant.token) == null) {
+        ShowDiloagAlretService().showDiloagAlret(
+            text: 'تسجيل الدخول',
+            onPressed: () {
+              Get.to(Auth());
+            },
+            text2: 'الرجوع',
+            onPressed2: () {
+              Get.back();
+            },
+            title: 'يرجى تسجيل الدخول اولا',
+            height: 180);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }

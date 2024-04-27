@@ -1,5 +1,10 @@
+import 'package:aldlal/core/service/show_diloag_alret.dart';
 import 'package:aldlal/core/viewModel/controle_viewmodel.dart';
+import 'package:aldlal/main.dart';
+import 'package:aldlal/view/auth/auth.dart';
+import 'package:aldlal/view/search/search_view.dart';
 import 'package:aldlal/view/widget/color_constant.dart';
+import 'package:aldlal/view/widget/storag_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -39,11 +44,7 @@ class ControlView extends StatelessWidget {
           currentIndex: controller
               .navigatorValue, // Use the current index from the controller
           onTap: (val) {
-            if (val == 2) {
-              controller.BottomSheetMethod();
-            } else {
-              controller.changeSelectedValue(val);
-            }
+            controller.onTapMethod(val);
           },
           items: [
             _bottomNavigationBarItem(

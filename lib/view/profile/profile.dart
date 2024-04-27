@@ -36,7 +36,10 @@ class ProfileView extends StatelessWidget {
                   height: 27,
                 ),
                 GestureDetector(
-                    onTap: () {}, child: ListButtons(text: 'منشورات الحساب')),
+                    onTap: () {
+                      controller.moveToMyPosts();
+                    },
+                    child: ListButtons(text: 'منشورات الحساب')),
                 const SizedBox(
                   height: 27,
                 ),
