@@ -12,6 +12,7 @@ import 'package:aldlal/view/widget/custom_text.dart';
 import 'package:aldlal/view/widget/storag_constant.dart';
 import 'package:aldlal/view/widget/urls.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -180,8 +181,11 @@ class HomeViewModel extends GetxController {
       var responseBody = jsonDecode(response.body);
 
       print(responseBody);
+      EasyLoading.instance.indicatorType = EasyLoadingIndicatorType.fadingGrid;
+      EasyLoading.show();
 
       if (responseBody['message'] == 'Unauthenticated.') {
+        EasyLoading.dismiss();
         ShowDiloagAlretService().showDiloagAlret(
             text: 'تسجيل الدخول',
             onPressed: () {
@@ -200,20 +204,27 @@ class HomeViewModel extends GetxController {
       if (response.statusCode == 404) {
         if (responseBody['message'] == 'No User!') {
           noUser(text: 'لــقد قمت بحذف حسابك');
+          EasyLoading.dismiss();
         }
         if (responseBody['message'] == 'No item for this ID') {
           noUser(text: 'هذا المنزل لم يعد متوفراََ');
+          EasyLoading.dismiss();
         }
       }
       if (response.statusCode == 200) {
+        EasyLoading.dismiss();
+
         /// complete the coding form here
-        Get.dialog(
-          Container(
-            child: Column(
-              children: [],
-            ),
+        Get.dialog(Container(
+          height: 200,
+          child: Center(
+            child: CustomText(
+                color: ColorConstant.secondTextColor,
+                text: 'تمت اضافة المنزل الى المفضلة بنجاح',
+                alignment: Alignment.center,
+                fontSize: 20),
           ),
-        );
+        ));
       }
     } catch (e) {
       print(e);
