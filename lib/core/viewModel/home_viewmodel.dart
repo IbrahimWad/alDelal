@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_null_comparison
+// ignore_for_file: unnecessary_null_comparison, sized_box_for_whitespace
 
 import 'dart:async';
 import 'dart:convert';
@@ -85,7 +85,7 @@ class HomeViewModel extends GetxController {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ${box.read(StoragConstant.token)}',
         },
-      ).timeout(Duration(seconds: 10));
+      ).timeout(const Duration(seconds: 10));
       final houseModel = houseModelFromJson(response.body);
       if (houseModel.data.lastPage != null &&
           houseModel.data.currentPage != null) {
@@ -114,7 +114,7 @@ class HomeViewModel extends GetxController {
 
       Get.dialog(
         barrierDismissible: false,
-        transitionDuration: Duration(milliseconds: 500),
+        transitionDuration: const Duration(milliseconds: 500),
         Center(
           child: Container(
             height: 150,
@@ -124,7 +124,7 @@ class HomeViewModel extends GetxController {
                 color: ColorConstant.backgroundColor),
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 CustomText(
@@ -134,7 +134,7 @@ class HomeViewModel extends GetxController {
                   color: ColorConstant.warning,
                   fontWeight: FontWeight.w400,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 12,
                 ),
                 CustomText(
@@ -156,7 +156,7 @@ class HomeViewModel extends GetxController {
         'خطـــأ',
         'خطــأ في تحميل المعومات',
         colorText: Colors.white,
-        duration: Duration(seconds: 20),
+        duration: const Duration(seconds: 20),
         snackPosition: SnackPosition.BOTTOM,
       );
 
@@ -190,9 +190,9 @@ class HomeViewModel extends GetxController {
             text: 'تسجيل الدخول',
             onPressed: () {
               Get.back();
-              Get.to(Auth(),
+              Get.to(const Auth(),
                   transition: Transition.downToUp,
-                  duration: Duration(milliseconds: 500));
+                  duration: const Duration(milliseconds: 500));
             },
             text2: 'الرجوع',
             onPressed2: () {
