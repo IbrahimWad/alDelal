@@ -241,14 +241,14 @@ class HomeViewModel extends GetxController {
       ),
       child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
           CustomText(
             text: text,
             color: ColorConstant.warning,
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           CustomButton(
