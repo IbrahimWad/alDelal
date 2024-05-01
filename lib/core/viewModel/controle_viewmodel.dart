@@ -113,6 +113,7 @@ class ControlViewModel extends GetxController {
       BottomSheetMethod();
     } else {
       if (val == 3) {
+        print(val);
         if (box.read(StoragConstant.token) == null) {
           ShowDiloagAlretService().showDiloagAlret(
               text: 'تسجيل الدخول',
@@ -126,10 +127,9 @@ class ControlViewModel extends GetxController {
               title: 'يرجى تسجيل الدخول اولا',
               height: 180);
         } else {
-          changeSelectedValue(val);
+          changeSelectedValue(val); // Move this inside the else block
         }
-      }
-      if (val == 1) {
+      } else if (val == 1) {
         Get.to(SearchView());
       } else {
         changeSelectedValue(val);

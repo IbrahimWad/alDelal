@@ -14,7 +14,7 @@ class SearchView extends StatelessWidget {
     return Scaffold(
       backgroundColor: ColorConstant.backgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: ColorConstant.backgroundColor,
         elevation: 0,
         automaticallyImplyLeading: false,
         actions: [
@@ -51,34 +51,37 @@ class SearchView extends StatelessWidget {
                       controller: controller.searchControlletText),
                   SizedBox(height: 28),
                   Expanded(
-                    child: GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 200,
-                        childAspectRatio: 1,
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20,
-                      ),
-                      itemCount: 5,
-                      itemBuilder: (BuildContext ctx, index) {
-                        //var formattedPrice = replaceFarsiNumber(price);
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 200,
+                          childAspectRatio: 1,
+                          crossAxisSpacing: 20,
+                          mainAxisSpacing: 20,
+                        ),
+                        itemCount: 5,
+                        itemBuilder: (BuildContext ctx, index) {
+                          //var formattedPrice = replaceFarsiNumber(price);
 
-                        return GestureDetector(
-                          onTap: () {},
-                          child: GridViewContainer(
-                            type: '',
-                            image:
-                                'https://i.ytimg.com/vi/nWSwPB4SJ38/maxresdefault.jpg',
-                            // favoritColor: dataList[index].isFavorited == true
-                            //     ? ColorConstant.textColor
-                            //     : ColorConstant.backgroundColor,
-                            price: '0.2',
-                            addToFavorit: () {
-                              // controller.addToFavorit(dataList[index].id);
-                            },
-                          ),
-                        );
-                      },
+                          return GestureDetector(
+                            onTap: () {},
+                            child: GridViewContainer(
+                              type: '',
+                              image:
+                                  'https://i.ytimg.com/vi/nWSwPB4SJ38/maxresdefault.jpg',
+                              // favoritColor: dataList[index].isFavorited == true
+                              //     ? ColorConstant.textColor
+                              //     : ColorConstant.backgroundColor,
+                              price: '0.2',
+                              addToFavorit: () {
+                                // controller.addToFavorit(dataList[index].id);
+                              },
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   )
                 ],
