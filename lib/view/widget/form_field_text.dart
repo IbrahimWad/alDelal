@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 
 class TextFormFiledCustom extends StatelessWidget {
   TextEditingController controller = TextEditingController();
+  Function()? onTap;
   TextFormFiledCustom({
     super.key,
     required this.controller,
+    required this.onTap,
   });
 
   @override
@@ -17,6 +19,7 @@ class TextFormFiledCustom extends StatelessWidget {
       child: Stack(
         children: [
           TextFormField(
+            onTap: onTap,
             controller: controller,
             decoration: InputDecoration(
               hintText: 'البحث',

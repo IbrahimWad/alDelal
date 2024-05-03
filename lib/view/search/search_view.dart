@@ -1,4 +1,4 @@
-import 'package:aldlal/core/viewModel/search_viewmode.dart';
+import 'package:aldlal/core/viewModel/search_viewmodel.dart';
 import 'package:aldlal/view/widget/color_constant.dart';
 import 'package:aldlal/view/widget/custom_text.dart';
 import 'package:aldlal/view/widget/form_field_text.dart';
@@ -48,6 +48,7 @@ class SearchView extends StatelessWidget {
               child: Column(
                 children: [
                   TextFormFiledCustom(
+                      onTap: () {},
                       controller: controller.searchControlletText),
                   SizedBox(height: 28),
                   Expanded(
