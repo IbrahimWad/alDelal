@@ -2,7 +2,7 @@ import 'package:aldlal/core/viewModel/auth_viewmodel.dart';
 import 'package:aldlal/core/viewModel/controle_viewmodel.dart';
 import 'package:aldlal/core/viewModel/home_viewmodel.dart';
 import 'package:aldlal/core/viewModel/profile_viewmodel.dart';
-import 'package:aldlal/core/viewModel/search_viewmode.dart';
+import 'package:aldlal/core/viewModel/search_viewmodel.dart';
 import 'package:aldlal/core/viewModel/splash_screen_viewmodel.dart';
 import 'package:aldlal/core/viewModel/verification_viewmodel.dart';
 import 'package:get/get.dart';
