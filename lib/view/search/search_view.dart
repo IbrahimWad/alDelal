@@ -52,39 +52,43 @@ class SearchView extends StatelessWidget {
               ],
             ),
           ),
-          body: Container(
-            child: Column(
-              children: [
-                SizedBox(height: 28),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 200,
-                        childAspectRatio: 1,
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20,
-                      ),
-                      itemCount: 5,
-                      itemBuilder: (BuildContext ctx, index) {
-                        return GestureDetector(
-                          onTap: () {},
-                          child: GridViewContainer(
-                            type: '',
-                            image:
-                                'https://i.ytimg.com/vi/nWSwPB4SJ38/maxresdefault.jpg',
-                            price: '0.2',
-                            addToFavorit: () {},
+          body: AppBarOnEditListener(
+            builder: (context, isEditing, child) {
+              return Container(
+                child: Column(
+                  children: [
+                    SizedBox(height: 28),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 200,
+                            childAspectRatio: 1,
+                            crossAxisSpacing: 20,
+                            mainAxisSpacing: 20,
                           ),
-                        );
-                      },
-                    ),
-                  ),
-                )
-              ],
-            ),
+                          itemCount: 5,
+                          itemBuilder: (BuildContext ctx, index) {
+                            return GestureDetector(
+                              onTap: () {},
+                              child: GridViewContainer(
+                                type: '',
+                                image:
+                                    'https://i.ytimg.com/vi/nWSwPB4SJ38/maxresdefault.jpg',
+                                price: '0.2',
+                                addToFavorit: () {},
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              );
+            },
           ),
         );
       },

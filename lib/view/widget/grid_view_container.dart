@@ -50,13 +50,12 @@ class GridViewContainer extends StatelessWidget {
             height: 40,
             left: 10,
             child: GestureDetector(
-              onTap: addToFavorit,
-              child: Image(
-                image: AssetImage('assets/images/favorit.png'),
-                height: 24,
-                width: 24,
-              ),
-            ),
+                onTap: addToFavorit,
+                child: Icon(
+                  Icons.favorite,
+                  color: favoritColor,
+                  size: 24,
+                )),
           ),
           Positioned(
               bottom: 5,

@@ -5,7 +5,7 @@ import 'dart:convert';
 
 import 'package:aldlal/core/service/auth_services.dart';
 import 'package:aldlal/main.dart';
-import 'package:aldlal/view/home/home_view.dart';
+import 'package:aldlal/view/home/control_view.dart';
 import 'package:aldlal/view/widget/storag_constant.dart';
 import 'package:aldlal/view/widget/urls.dart';
 import 'package:flutter/material.dart';
@@ -107,7 +107,7 @@ class VerificationViewModel extends GetxController {
         }
         if (responseBody['status'] == true) {
           box.write(StoragConstant.token, token);
-          Get.offAll(HomeView());
+          Get.offAll(ControlView());
         }
       }
     } catch (e) {

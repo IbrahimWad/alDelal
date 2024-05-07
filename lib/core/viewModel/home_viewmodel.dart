@@ -183,6 +183,7 @@ class HomeViewModel extends GetxController {
       print(responseBody);
       EasyLoading.instance.indicatorType = EasyLoadingIndicatorType.fadingGrid;
       EasyLoading.show();
+      print(response.statusCode);
 
       if (responseBody['message'] == 'Unauthenticated.') {
         EasyLoading.dismiss();
@@ -226,38 +227,48 @@ class HomeViewModel extends GetxController {
           ),
         ));
       }
+      if (response.statusCode == 400) {
+        EasyLoading.dismiss();
+        noUser(text: 'هذا المنزل ضمن الفضلة');
+
+        /// do some changes here
+      }
     } catch (e) {
       print(e);
     }
   }
 
   noUser({required String text}) {
-    Get.dialog(Container(
-      height: 200,
-      width: 200,
-      decoration: BoxDecoration(
-        color: ColorConstant.backgroundColor,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 50,
-          ),
-          CustomText(
-            text: text,
-            color: ColorConstant.warning,
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          CustomButton(
-            onPressed: () {
-              Get.back();
-            },
-            text: 'الرجوع',
-          ),
-        ],
+    Get.dialog(Center(
+      child: Container(
+        height: 150,
+        width: 200,
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        decoration: BoxDecoration(
+          color: ColorConstant.backgroundColor,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 50,
+            ),
+            CustomText(
+              text: text,
+              alignment: Alignment.center,
+              color: ColorConstant.warning,
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            CustomButton(
+              onPressed: () {
+                Get.back();
+              },
+              text: 'الرجوع',
+            ),
+          ],
+        ),
       ),
     ));
   }

@@ -168,8 +168,8 @@ class HomeView extends StatelessWidget {
                                     'https://i.ytimg.com/vi/nWSwPB4SJ38/maxresdefault.jpg',
                                 favoritColor:
                                     dataList[index].isFavorited == true
-                                        ? ColorConstant.textColor
-                                        : ColorConstant.backgroundColor,
+                                        ? ColorConstant.backgroundColor
+                                        : ColorConstant.textColor,
                                 price: formattedPrice,
                                 addToFavorit: () {
                                   controller.addToFavorit(dataList[index].id);
