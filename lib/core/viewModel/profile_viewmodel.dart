@@ -6,6 +6,7 @@ import 'package:aldlal/view/widget/color_constant.dart';
 import 'package:aldlal/view/widget/custom_button.dart';
 import 'package:aldlal/view/widget/custom_text.dart';
 import 'package:aldlal/view/widget/storag_constant.dart';
+import 'package:aldlal/view/widget/urls.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -22,8 +23,18 @@ class ProfileViewModel extends GetxController {
       );
     }
 
-    box.erase();
-    Get.offAll(ControlView());
+    ShowDiloagAlretService().showDiloagAlret(
+        text: 'تسجيل الخروج',
+        onPressed: () {
+          box.erase();
+          Get.offAll(ControlView());
+        },
+        text2: 'الرجوع',
+        onPressed2: () {
+          Get.back();
+        },
+        title: 'هل انت متأكد من تسجيل الخروج',
+        height: 210);
   }
 
   Future<void> deleteAccount() async {
@@ -35,7 +46,8 @@ class ProfileViewModel extends GetxController {
     }
 
     try {
-      var response = await http.delete(Uri.parse(''), headers: {
+      /// change this
+      var response = await http.delete(Uri.parse(Urls.deleteUser), headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ${box.read(StoragConstant.token)}',

@@ -35,9 +35,6 @@ class Auth extends GetWidget<AuthViewModel> {
                   onTap: () async {
                     controller.login(
                         phone: '964${controller.phone.value.text}');
-
-                    print(await controller.login(
-                        phone: '964${controller.phone.value.text}'));
                   },
                   highlightColor: Colors.transparent,
                   splashColor: Colors.transparent,
