@@ -1,5 +1,4 @@
 import 'package:aldlal/core/viewModel/profile_viewmodel.dart';
-import 'package:aldlal/view/auth/auth.dart';
 import 'package:aldlal/view/widget/color_constant.dart';
 import 'package:aldlal/view/widget/custom_text.dart';
 import 'package:flutter/material.dart';
