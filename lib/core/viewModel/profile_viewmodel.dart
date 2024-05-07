@@ -69,16 +69,16 @@ class ProfileViewModel extends GetxController {
     }
   }
 
-  void moveToMyPosts() {
-    if (box.read(StoragConstant.token) == null) {
-      Get.snackbar('خطـــأ', 'لم تقم بتسجيل الدخول من الاساس',
-          colorText: Colors.white,
-          duration: Duration(seconds: 20),
-          snackPosition: SnackPosition.BOTTOM);
-    }
+  // void moveToMyPosts() {
+  //   if (box.read(StoragConstant.token) == null) {
+  //     Get.snackbar('خطـــأ', 'لم تقم بتسجيل الدخول من الاساس',
+  //         colorText: Colors.white,
+  //         duration: Duration(seconds: 20),
+  //         snackPosition: SnackPosition.BOTTOM);
+  //   }
 
-    Get.to(Auth());
-  }
+  //   Get.to(Auth());
+  // }
 
   Widget _buildDialog(String message, String buttonText) {
     return Center(
@@ -168,5 +168,71 @@ class ProfileViewModel extends GetxController {
     Get.dialog(
       _buildDialog('لا يمكن حذف هذا الحساب', 'الرجوع'),
     );
+  }
+
+  login() {
+    if (box.read(StoragConstant.token) == null) {
+      Get.to(Auth(),
+          transition: Transition.downToUp,
+          duration: Duration(milliseconds: 500));
+    } else {
+      Get.dialog(Center(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          height: 170,
+          width: 225,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: ColorConstant.backgroundColor,
+          ),
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              CustomText(
+                text: 'انت بالفعل قمت بتسجيل الدخول',
+                alignment: Alignment.center,
+                color: ColorConstant.warning,
+                fontSize: 18,
+              ),
+              const SizedBox(height: 40),
+              CustomButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  text: 'الرجوع')
+            ],
+          ),
+        ),
+      ));
+      // ShowDiloagAlretService().showDiloagAlret(
+      //     text: '',
+      //     onPressed: () {},
+      //     text2: 'الرجوع',
+      //     onPressed2: () {
+      //       Get.back();
+      //     },
+      //     title: 'بالفعل قمت بالتسجيل',
+      //     height: 200);
+    }
+  }
+
+  moveToMyPosts() {
+    try {
+      if (box.read(StoragConstant.token) == null) {
+        ShowDiloagAlretService().showDiloagAlret(
+            text: 'تسجيل الدخول',
+            onPressed: () {
+              Get.to(Auth());
+            },
+            text2: 'الرجوع',
+            onPressed2: () {
+              Get.back();
+            },
+            title: 'انت غير مسجل في الحساب',
+            height: 200);
+      } else {}
+    } catch (e) {
+      print(e);
+    }
   }
 }

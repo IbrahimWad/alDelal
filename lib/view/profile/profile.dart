@@ -22,9 +22,7 @@ class ProfileView extends StatelessWidget {
                 ),
                 GestureDetector(
                     onTap: () {
-                      Get.to(Auth(),
-                          transition: Transition.downToUp,
-                          duration: Duration(milliseconds: 500));
+                      controller.login();
                     },
                     child: ListButtons(text: 'تسجيل الدخول')),
                 const SizedBox(
