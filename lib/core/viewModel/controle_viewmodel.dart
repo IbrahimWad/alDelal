@@ -1,5 +1,6 @@
 import 'package:aldlal/core/service/show_diloag_alret.dart';
 import 'package:aldlal/main.dart';
+import 'package:aldlal/view/add_house/add_house.dart';
 import 'package:aldlal/view/auth/auth.dart';
 import 'package:aldlal/view/home/home_view.dart';
 import 'package:aldlal/view/profile/profile.dart';
@@ -75,7 +76,9 @@ class ControlViewModel extends GetxController {
             ),
             const SizedBox(height: 16),
             CustomButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.to(AddHouseView());
+              },
               text: 'اضافة عرض بيع',
               fontSize: 20,
               fontWeight: FontWeight.w400,

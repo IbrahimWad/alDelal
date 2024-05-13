@@ -1,3 +1,4 @@
+import 'package:aldlal/core/viewModel/add_house_viewmodel.dart';
 import 'package:aldlal/core/viewModel/auth_viewmodel.dart';
 import 'package:aldlal/core/viewModel/controle_viewmodel.dart';
 import 'package:aldlal/core/viewModel/home_viewmodel.dart';
@@ -17,5 +18,6 @@ class Binding extends Bindings {
     Get.lazyPut(() => HomeViewModel(), fenix: true);
     Get.lazyPut(() => ProfileViewModel());
     Get.lazyPut(() => SearchViewModel());
+    Get.lazyPut(() => AddHouseViewModel);
   }
 }
