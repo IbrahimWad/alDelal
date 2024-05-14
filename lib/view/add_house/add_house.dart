@@ -1,6 +1,7 @@
 import 'package:aldlal/core/viewModel/add_house_viewmodel.dart';
 import 'package:aldlal/view/widget/color_constant.dart';
 import 'package:aldlal/view/widget/custom_text_field.dart';
+import 'package:aldlal/view/widget/drop_down_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -59,23 +60,21 @@ class AddHouseView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
-                          child: CustomTextField(
+                          child: CustomDropButton(
                             text: 'نوع العقار',
-                            controller: controller.size,
-                            validator: (val) {
-                              return '';
-                            },
-                            hint: '150',
+                            dropdownvalue: '',
+                            items: [],
+                            hint: 'تجاري',
+                            onChanged: (val) {},
                           ),
                         ),
                         Expanded(
-                          child: CustomTextField(
+                          child: CustomDropButton(
                             text: 'سند العقار',
-                            controller: controller.size,
-                            validator: (val) {
-                              return '';
-                            },
-                            hint: 'شارع 40',
+                            dropdownvalue: '',
+                            items: [],
+                            hint: 'طابو',
+                            onChanged: (val) {},
                           ),
                         ),
                       ],
