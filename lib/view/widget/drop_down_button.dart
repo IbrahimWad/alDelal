@@ -1,20 +1,24 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:aldlal/view/widget/color_constant.dart';
 import 'package:aldlal/view/widget/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class CustomDropButton extends StatelessWidget {
-  final List<DropdownMenuItem<dynamic>> items;
-  final Function(dynamic) onChanged;
-  final dynamic dropdownvalue;
+  final List<DropdownMenuItem<String>> items;
+  final Function(String?) onChanged;
+  final String? dropdownvalue;
   final String text;
   final String hint;
-  const CustomDropButton(
-      {super.key,
-      required this.items,
-      required this.onChanged,
-      required this.dropdownvalue,
-      required this.text,
-      required this.hint});
+
+  CustomDropButton({
+    super.key,
+    required this.items,
+    required this.onChanged,
+    required this.dropdownvalue,
+    required this.text,
+    required this.hint,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +43,11 @@ class CustomDropButton extends StatelessWidget {
             ),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: DropdownButton(
+              child: DropdownButton<String>(
                 items: items,
-
                 onChanged: onChanged,
                 underline: SizedBox(), // remove the underline
-                value: dropdownvalue,
+                value: dropdownvalue!.isEmpty ? null : dropdownvalue,
                 icon: Icon(Icons.arrow_drop_down),
                 iconSize: 36, // adjust as needed
                 isExpanded: true,
@@ -58,7 +61,9 @@ class CustomDropButton extends StatelessWidget {
                   color: ColorConstant.textColor,
                   fontSize: 20,
                 ),
-                //   dropdownColor: Colors.white, // adjust as needed
+                dropdownColor:
+                    ColorConstant.backgroundColor,
+                    
               ),
             ),
           ),
