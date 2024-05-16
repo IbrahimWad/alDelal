@@ -48,7 +48,10 @@ class CustomDropButton extends StatelessWidget {
                 onChanged: onChanged,
                 underline: SizedBox(), // remove the underline
                 value: dropdownvalue!.isEmpty ? null : dropdownvalue,
-                icon: Icon(Icons.arrow_drop_down),
+                icon: Icon(
+                  Icons.arrow_drop_down,
+                  color: ColorConstant.textColor,
+                ),
                 iconSize: 36, // adjust as needed
                 isExpanded: true,
                 hint: CustomText(
@@ -61,9 +64,7 @@ class CustomDropButton extends StatelessWidget {
                   color: ColorConstant.textColor,
                   fontSize: 20,
                 ),
-                dropdownColor:
-                    ColorConstant.backgroundColor,
-                    
+                dropdownColor: ColorConstant.backgroundColor,
               ),
             ),
           ),

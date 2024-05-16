@@ -4,9 +4,12 @@ import 'package:get/get.dart';
 class AddHouseViewModel extends GetxController {
   TextEditingController areaName = TextEditingController();
   TextEditingController size = TextEditingController();
+  TextEditingController price = TextEditingController();
+  TextEditingController note = TextEditingController();
 
   final RxString selectedValueType = ''.obs;
   final RxString selectedValueDox = ''.obs;
+  final RxString selectedPrice = ''.obs;
 
   var listType = [
     'تجاري',
@@ -24,9 +27,21 @@ class AddHouseViewModel extends GetxController {
     'شرعي',
   ];
 
+  var listPrice = ['الف', 'مليون', 'مليار'];
+
   changeValueType(String? val) {
     try {
       selectedValueType.value = val ?? '';
+
+      update();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  changeValuePrice(String? val) {
+    try {
+      selectedPrice.value = val ?? '';
 
       update();
     } catch (e) {
@@ -48,6 +63,8 @@ class AddHouseViewModel extends GetxController {
   void onInit() {
     areaName;
     size;
+    price;
+    note;
     // TODO: implement onInit
     super.onInit();
   }

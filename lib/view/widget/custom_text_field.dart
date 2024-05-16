@@ -9,11 +9,13 @@ class CustomTextField extends StatelessWidget {
   final FormFieldValidator<String?> validator;
   TextEditingController controller = TextEditingController();
   final String hint;
+  final int maxLines;
   CustomTextField(
       {super.key,
       required this.text,
       required this.controller,
       required this.validator,
+      this.maxLines = 1,
       required this.hint});
 
   @override
@@ -33,6 +35,7 @@ class CustomTextField extends StatelessWidget {
           SizedBox(height: 6),
           Container(
             child: TextFormField(
+              maxLines: maxLines,
               style: TextStyle(color: ColorConstant.textColor, fontSize: 20),
               cursorColor: ColorConstant.textColor,
               controller: controller,

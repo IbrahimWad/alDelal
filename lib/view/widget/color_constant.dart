@@ -7,4 +7,5 @@ class ColorConstant {
   static const Color secondTextColor = Color(0xffB5C2D5);
   static const Color warning = Color(0xffA31F33);
   static const Color wtTextColor = Color(0xffC2E8FF);
+  
 }
