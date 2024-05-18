@@ -47,6 +47,8 @@ dependencies:
   persistent_bottom_nav_bar: ^5.0.2
   cached_network_image: ^3.3.1
   app_bar_with_search_switch: ^1.8.5
+  multi_image_picker_view: ^1.0.1
+  image_picker: ^1.1.1
 
 
 dev_dependencies:

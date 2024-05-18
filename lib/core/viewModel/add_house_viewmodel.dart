@@ -1,5 +1,9 @@
+import 'dart:io';
+
+import 'package:aldlal/view/widget/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddHouseViewModel extends GetxController {
   TextEditingController areaName = TextEditingController();
@@ -74,5 +78,32 @@ class AddHouseViewModel extends GetxController {
       return 'يرجى ادخال اسم الحي';
     }
     return null;
+  }
+
+  List<File> selectedImages = []; // List of selected image
+  final picker = ImagePicker(); // Instance of Image picker
+
+  getImages() async {
+    final pickedFile = await picker.pickMultiImage();
+    List<XFile> xfilePick = pickedFile;
+
+    if (xfilePick.isNotEmpty) {
+      for (var i = 0; i < xfilePick.length; i++) {
+        selectedImages.add(File(xfilePick[i].path));
+      }
+      Get.snackbar(
+        'نجاح',
+        'تم اضافة الصور بنجاح',
+        colorText: ColorConstant.secondTextColor,
+        dismissDirection: DismissDirection.down,
+      );
+    } else {
+      Get.snackbar(
+        'خطأ',
+        'لم تقم باختيار اي صور',
+        colorText: ColorConstant.warning,
+        dismissDirection: DismissDirection.down,
+      );
+    }
   }
 }

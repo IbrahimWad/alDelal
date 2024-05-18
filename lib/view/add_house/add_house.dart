@@ -178,7 +178,9 @@ class AddHouseView extends StatelessWidget {
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 15),
                         child: CustomButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              controller.getImages();
+                            },
                             text: 'اضافة صور',
                             borderColor: ColorConstant.textColor,
                             buttonColor: ColorConstant.backgroundColor,
@@ -227,7 +229,7 @@ class AddHouseView extends StatelessWidget {
                       onPressed: () {},
                       buttonColor: ColorConstant.backgroundColor,
                       color: ColorConstant.secondTextColor,
-                      text: 'نشر',
+                      text: 'اللغاء',
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
                     ),
