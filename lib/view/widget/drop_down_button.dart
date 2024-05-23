@@ -38,7 +38,7 @@ class CustomDropButton extends StatelessWidget {
           Container(
             height: 50,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6),
+              borderRadius: BorderRadius.circular(5),
               border: Border.all(color: ColorConstant.textColor),
             ),
             child: Container(

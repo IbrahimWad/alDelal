@@ -31,7 +31,7 @@ class AddHouseView extends StatelessWidget {
                   },
                   hint: 'حي العدالة',
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -57,7 +57,7 @@ class AddHouseView extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 5),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -115,7 +115,7 @@ class AddHouseView extends StatelessWidget {
                               }))
                     ]),
                 SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -157,7 +157,7 @@ class AddHouseView extends StatelessWidget {
                               }))
                     ]),
                 SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
                 CustomTextField(
                     text: 'اضافة ملاحظات',
@@ -169,7 +169,7 @@ class AddHouseView extends StatelessWidget {
                     hint:
                         'مثال عدد الغرف وعدد الطوابق واتجاه الشرفة او العنوان التفصيلي للمنطقة'),
                 SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -193,7 +193,9 @@ class AddHouseView extends StatelessWidget {
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 15),
                         child: CustomButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              controller.showImages();
+                            },
                             text: 'اظهار الصور',
                             borderColor: ColorConstant.textColor,
                             buttonColor: ColorConstant.backgroundColor,
@@ -205,7 +207,7 @@ class AddHouseView extends StatelessWidget {
                   ],
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
                 Row(children: [
                   Expanded(
