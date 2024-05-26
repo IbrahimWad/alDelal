@@ -2,11 +2,14 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:aldlal/core/service/show_diloag_alret.dart';
 import 'package:aldlal/main.dart';
+import 'package:aldlal/view/auth/auth.dart';
 import 'package:aldlal/view/widget/color_constant.dart';
 import 'package:aldlal/view/widget/storag_constant.dart';
 import 'package:aldlal/view/widget/urls.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -17,6 +20,17 @@ class AddHouseViewModel extends GetxController {
   TextEditingController size = TextEditingController();
   TextEditingController price = TextEditingController();
   TextEditingController note = TextEditingController();
+  TextEditingController streat = TextEditingController();
+
+  @override
+  void onInit() {
+    areaName;
+    size;
+    price;
+    note;
+    streat;
+    super.onInit();
+  }
 
   final RxString selectedValueType = ''.obs;
   final RxString selectedValueDox = ''.obs;
@@ -50,11 +64,6 @@ class AddHouseViewModel extends GetxController {
 
   void changeValueDox(String? val) {
     selectedValueDox.value = val ?? '';
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
   }
 
   String? areaNameValid(val) {
@@ -96,7 +105,7 @@ class AddHouseViewModel extends GetxController {
       Center(
         child: Column(
           children: [
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Container(
               height: Get.height * 0.7,
               child: Obx(() => CarouselSlider(
@@ -112,7 +121,7 @@ class AddHouseViewModel extends GetxController {
                       return Builder(
                         builder: (BuildContext context) {
                           return Container(
-                            margin: EdgeInsets.all(6.0),
+                            margin: const EdgeInsets.all(6.0),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8.0),
                               image: DecorationImage(
@@ -136,7 +145,7 @@ class AddHouseViewModel extends GetxController {
                 onPressed: () {
                   deleteCurrentImage();
                 },
-                icon: Icon(Icons.close, color: Colors.white),
+                icon: const Icon(Icons.close, color: Colors.white),
               ),
             )
           ],
@@ -160,23 +169,56 @@ class AddHouseViewModel extends GetxController {
     }
   }
 
-  addPost() {
+  addPost() async {
     // complete from here
     try {
-      http.post(
-        Uri.parse(Urls.postHouse),
-        body: jsonEncode({
-          'images': selectedImages,
-          'neighborhood': areaName.value.text,
-          'area': size.value.text,
-          //   ''
-        }),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ${box.read(StoragConstant.token)}',
-        },
-      );
-    } catch (e) {}
+      EasyLoading.show();
+      var response = await http.post(Uri.parse(Urls.postHouse),
+          body: jsonEncode({
+            'images': selectedImages,
+            'neighborhood': areaName.value.text,
+            'area': size.value.text,
+            'estateType': selectedValueType.value,
+            'estateStreet': streat.value.text,
+            'estateDeed': selectedValueType.value,
+            'price': price.value.text,
+            'displayType': 1, // change this
+            'note': note.value.text,
+          }),
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ${box.read(StoragConstant.token)}',
+          });
+
+      var responseBody = jsonDecode(response.body);
+
+      EasyLoading.dismiss();
+
+      if (response.statusCode != 200) {
+        if (responseBody['message'] == 'Please upload an image') {
+          Get.snackbar('خطــأ', 'الرجــاء قم بارفاق بعض الصور',
+              colorText: ColorConstant.warning,
+              snackPosition: SnackPosition.BOTTOM);
+        }
+
+        if (responseBody['message'] == 'Unauthenticated.') {
+          // services here
+          ShowDiloagAlretService().showDiloagAlret(
+              text: 'تسجيل الدخول',
+              onPressed: () {
+                Get.to(Auth());
+              },
+              text2: 'الرجوع',
+              onPressed2: () {
+                Get.back();
+              },
+              title: 'انت غير مسجل في التطبيق',
+              height: 180);
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }

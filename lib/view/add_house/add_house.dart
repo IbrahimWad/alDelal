@@ -48,7 +48,7 @@ class AddHouseView extends StatelessWidget {
                     Expanded(
                       child: CustomTextField(
                         text: 'شارع العقار',
-                        controller: controller.size,
+                        controller: controller.streat,
                         validator: (val) {
                           return '';
                         },
